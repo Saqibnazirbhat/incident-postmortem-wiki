@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Obsidian (per CLAUDE.md, the agent does not touch this)
+.obsidian/
+
+# Local Claude Code state
+.claude/
