@@ -315,7 +315,7 @@ of the same shape.
 
 ## License
 
-Pick whatever you like — MIT is a sensible default for demos.
+MIT
 
 ---
 
