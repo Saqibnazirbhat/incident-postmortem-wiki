@@ -38,6 +38,29 @@ plain files you can grep, edit, and commit.
 
 ---
 
+## What the wiki looks like
+
+![Graph view of the wiki in Obsidian](./assets/graph-view.png)
+
+This is the demo wiki rendered in [Obsidian](https://obsidian.md)'s
+graph view. Each node is a markdown page; each edge is a wiki-link
+the agent created during an ingest run.
+
+The dense cluster in the middle is **the synthesized wiki** — incidents
+linked to root causes, root causes linked to services, services linked
+to owners, owners linked back to incidents. None of those edges existed
+in the source material; the agent inferred and wrote each one,
+deliberately, while ingesting four sources.
+
+The lonely nodes at the bottom are **raw sources** (`raw/postmortems/`,
+`raw/slack/`) plus the meta files (`README`, `CLAUDE`). They don't
+cross-link to each other — they're just standalone documents. That
+disconnect is exactly the difference: a RAG pipeline pointed at the same
+four files would treat every node down there as an undifferentiated
+chunk. The wiki sees structure.
+
+---
+
 ## Show, don't tell
 
 This repo ships with a worked example: four real-shaped sources have
