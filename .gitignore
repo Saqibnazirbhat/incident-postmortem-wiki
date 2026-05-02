@@ -15,6 +15,3 @@ Thumbs.db
 
 # Local Claude Code state
 .claude/
-
-# Agent operating manual — kept local, not published
-CLAUDE.md

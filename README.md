@@ -11,9 +11,14 @@ pattern. Humans abandon wikis because the maintenance cost grows faster
 than the value.
 
 This repo flips that: an LLM agent (Claude Code, driven by a strict
-`CLAUDE.md` operating manual) does the bookkeeping, the human curates
-sources and asks questions. The maintenance cost is near zero, so the
-wiki actually stays maintained.
+[`CLAUDE.md`](./CLAUDE.md) operating manual) does the bookkeeping, the
+human curates sources and asks questions. The maintenance cost is near
+zero, so the wiki actually stays maintained.
+
+> **Note:** [`CLAUDE.md`](./CLAUDE.md) is checked in **deliberately**.
+> It's the most interesting artifact in this repo — the operating
+> manual is the whole point of the pattern, not a private config. Read
+> it alongside this README.
 
 ---
 
@@ -315,7 +320,7 @@ The pattern this repo implements is essentially:
 > high-leverage maintenance work humans skip.
 
 That's it. The interesting bits aren't in any of the Python — they're
-in `CLAUDE.md`:
+in [`CLAUDE.md`](./CLAUDE.md):
 
 - exact step-by-step workflows for ingest / query / lint,
 - exact page templates with required frontmatter,
