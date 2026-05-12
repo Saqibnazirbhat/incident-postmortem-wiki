@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wiki-links — wiki anatomy</title>
+<style>
+  :root { --ivory:#FAF9F5; --slate:#141413; --clay:#D97757; --olive:#788C5D; --oat:#E3DACC; --gray-150:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F;
+    --serif:"Source Serif Pro","Source Serif 4","Iowan Old Style",Constantia,Cambria,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --mono:"JetBrains Mono","Cascadia Mono","Consolas",ui-monospace,monospace; }
+  * { box-sizing:border-box; } html,body { margin:0; padding:0; }
+  body { background:var(--ivory); color:var(--slate); font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  a { color:inherit; }
+  .page { max-width:760px; margin:0 auto; padding:56px 36px 96px; }
+  .topbar { display:flex; gap:14px; align-items:center; font-family:var(--mono); font-size:12px; color:var(--gray-500); margin-bottom:48px; }
+  .topbar a.back { text-decoration:none; color:var(--gray-500); transition:color 120ms ease; } .topbar a.back:hover { color:var(--clay); }
+  .topbar .sep { color:var(--gray-300); }
+  .marker { font-family:var(--mono); font-size:11.5px; color:var(--clay); letter-spacing:0.14em; margin-bottom:14px; }
+  h1 { font-family:var(--serif); font-weight:400; font-size:44px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 10px; }
+  .filepath { font-family:var(--mono); font-size:13px; color:var(--gray-500); margin:0 0 28px; }
+  .lede { font-family:var(--serif); font-style:italic; font-size:19px; line-height:1.55; color:var(--gray-500); max-width:600px; margin:0 0 48px; }
+  .lede strong { color:var(--slate); font-style:normal; font-weight:600; }
+  .card { background:var(--gray-150); border:1px solid var(--gray-300); border-radius:14px; padding:36px; margin-bottom:56px; }
+  .card svg { display:block; width:100%; height:auto; max-height:300px; margin:0 auto; }
+  .card .caption { font-size:13px; color:var(--gray-500); text-align:center; margin-top:20px; }
+  .subhead { font-family:var(--mono); font-size:11.5px; color:var(--gray-500); letter-spacing:0.14em; text-transform:uppercase; margin:48px 0 16px; display:flex; align-items:center; gap:14px; }
+  .subhead::after { content:""; flex:1; height:1px; background:var(--gray-300); }
+  .specimen { border:1px solid var(--gray-300); border-radius:10px; overflow:hidden; background:var(--ivory); margin-top:8px; }
+  .specimen .bar { display:flex; justify-content:space-between; padding:10px 16px; background:var(--gray-150); border-bottom:1px solid var(--gray-300); font-family:var(--mono); font-size:11.5px; color:var(--gray-500); letter-spacing:0.02em; }
+  .specimen .bar .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--clay); margin-right:8px; vertical-align:middle; }
+  .specimen pre { margin:0; padding:22px 24px; font-family:var(--mono); font-size:12.5px; line-height:1.75; color:var(--slate); overflow-x:auto; white-space:pre; }
+  .specimen pre .c { color:var(--gray-500); } .specimen pre .k { color:var(--clay); font-weight:600; } .specimen pre .hd { color:var(--slate); font-weight:700; } .specimen pre .link { color:var(--olive); font-weight:600; }
+  ol.rules { margin:0; padding:0; counter-reset:r; list-style:none; }
+  ol.rules li { counter-increment:r; padding:14px 0 14px 44px; position:relative; font-size:15px; border-top:1px solid var(--gray-300); }
+  ol.rules li:last-child { border-bottom:1px solid var(--gray-300); }
+  ol.rules li::before { content:counter(r,decimal-leading-zero); position:absolute; left:0; top:15px; font-family:var(--mono); font-size:11px; color:var(--gray-500); letter-spacing:0.08em; }
+  ol.rules code, p code { font-family:var(--mono); font-size:0.84em; background:var(--gray-150); padding:1px 6px; border-radius:4px; }
+  .nav { margin-top:88px; padding-top:22px; border-top:1px solid var(--gray-300); display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12.5px; }
+  .nav a { text-decoration:none; color:var(--gray-500); transition:color 120ms ease; } .nav a:hover { color:var(--clay); } .nav .home { color:var(--slate); }
+  .ill text { font-family:var(--mono); font-size:12px; fill:var(--slate); }
+  .ill .anno { font-family:var(--sans); font-size:11.5px; fill:var(--gray-500); }
+  .ill .box { fill:var(--ivory); stroke:var(--slate); stroke-width:1.5; }
+  .ill .focus { fill:var(--clay); stroke:var(--slate); stroke-width:2; }
+  .ill .gline { stroke:var(--gray-500); stroke-width:1.2; fill:none; }
+  @media (max-width:600px) { .page { padding:40px 20px 70px; } h1 { font-size:32px; } }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="topbar">
+    <a class="back" href="index.html">← anatomy</a>
+    <span class="sep">·</span>
+    <span>cross-cutting rules · wiki-links</span>
+  </header>
+
+  <div class="marker">04 · CROSS-CUTTING RULES</div>
+  <h1>Wiki-links.</h1>
+  <p class="filepath">[[page-name]] · Obsidian syntax</p>
+  <p class="lede">
+    Wiki-links are how pages reference each other.
+    Resolution is by <strong>basename only</strong> — which is why basenames must be unique across the whole tree.
+    Render in Obsidian, scan with <code>lint.py</code>, follow when reading.
+  </p>
+
+  <div class="card">
+    <svg class="ill" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-label="A wiki-link resolution">
+      <!-- source page -->
+      <rect class="box" x="40" y="50" width="200" height="140" rx="10"/>
+      <text x="60" y="76" style="font-family:var(--serif);font-size:13px;font-weight:600;">2026-03-14-checkout</text>
+      <text x="60" y="92" class="anno">incidents/</text>
+      <line x1="60" y1="104" x2="220" y2="104" class="gline"/>
+      <line class="gline" x1="60" y1="120" x2="180" y2="120"/>
+      <text x="60" y="142" style="font-family:var(--mono);font-size:11px;">Linked to </text>
+      <text x="116" y="142" style="font-family:var(--mono);font-size:11px;fill:var(--clay);">[[checkout-api]]</text>
+      <line class="gline" x1="60" y1="158" x2="200" y2="158"/>
+      <line class="gline" x1="60" y1="172" x2="170" y2="172"/>
+
+      <!-- arrow -->
+      <text x="260" y="116" style="font-family:var(--mono);font-size:13px;fill:var(--clay);">[[ ]]</text>
+      <path class="gline" d="M295 120 C 340 120, 360 120, 388 120"/>
+      <polygon points="384,117 392,120 384,123" fill="var(--gray-500)"/>
+      <text x="346" y="142" text-anchor="middle" class="anno">resolves by basename</text>
+
+      <!-- target page -->
+      <rect class="focus" x="400" y="50" width="180" height="140" rx="10"/>
+      <text x="420" y="76" style="font-family:var(--serif);font-size:13px;fill:var(--ivory);font-weight:600;">checkout-api</text>
+      <text x="420" y="92" class="anno" style="fill:var(--ivory);">wiki/services/</text>
+      <line x1="420" y1="104" x2="560" y2="104" stroke="var(--ivory)" stroke-width="1" opacity="0.4"/>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.4" x1="420" y1="120" x2="540" y2="120"/>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.4" x1="420" y1="134" x2="560" y2="134"/>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.4" x1="420" y1="148" x2="530" y2="148"/>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.4" x1="420" y1="162" x2="550" y2="162"/>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.4" x1="420" y1="176" x2="520" y2="176"/>
+    </svg>
+    <p class="caption">A link from one page to another resolves by file basename — no folder path needed.</p>
+  </div>
+
+  <p class="subhead">Syntax</p>
+  <div class="specimen">
+    <div class="bar"><span><span class="dot"></span>wiki-link syntax</span><span>Obsidian-flavoured</span></div>
+<pre><span class="c"># basic link — render and follow by basename</span>
+[[<span class="link">checkout-api</span>]]
+
+<span class="c"># alias — display different text</span>
+[[<span class="link">checkout-api</span>|the checkout service]]
+
+<span class="c"># inside frontmatter — same resolution</span>
+<span class="k">services</span>: [<span class="link">checkout-api</span>, <span class="link">payments-db</span>]
+
+<span class="c"># in body prose — link the FIRST mention only</span>
+[[<span class="link">connection-pool-exhaustion</span>]] surfaced again on 2026-04-12;
+pool exhaustion remained the dominant pattern after that.</pre>
+  </div>
+
+  <p class="subhead">Rules</p>
+  <ol class="rules">
+    <li>Syntax is <code>[[page-name]]</code> or <code>[[page-name|display text]]</code>. The page-name is the file basename without <code>.md</code>.</li>
+    <li>Link the <strong>first</strong> mention of any other entity on a page. Subsequent mentions stay plain text.</li>
+    <li>Frontmatter list values are wiki-links too — <code>services: [checkout-api]</code> resolves to <code>wiki/services/checkout-api.md</code>.</li>
+    <li><strong>Basenames are unique across the entire wiki tree.</strong> Two pages cannot share one — <code>tools/lint.py</code> enforces this because collisions break resolution.</li>
+    <li>If a linked page doesn't exist, <strong>create a stub</strong>. Never leave a dangling link.</li>
+    <li>Links are case-sensitive on the filesystem but Obsidian normalises — pick one casing convention and stick to it (we use kebab-case).</li>
+  </ol>
+
+  <p class="subhead">Why basename-only resolution</p>
+  <p style="font-size: 15px; color: var(--slate); max-width: 620px;">
+    Obsidian and the lint tool both resolve <code>[[checkout-api]]</code> by scanning the whole <code>wiki/</code> tree for a file named <code>checkout-api.md</code>.
+    This lets pages move between folders without breaking links — but it requires every basename to be globally unique.
+    If you ever need two pages with the same logical name (rare), disambiguate the slug at file-rename time, not by adding folder prefixes to the link.
+  </p>
+
+  <nav class="nav">
+    <a href="08-frontmatter.html">← 08 — frontmatter</a>
+    <a class="home" href="index.html">all pieces</a>
+    <a href="10-stubs.html">10 — stubs →</a>
+  </nav>
+
+</main>
+</body>
+</html>

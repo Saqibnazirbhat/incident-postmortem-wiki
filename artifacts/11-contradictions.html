@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contradictions — wiki anatomy</title>
+<style>
+  :root { --ivory:#FAF9F5; --slate:#141413; --clay:#D97757; --olive:#788C5D; --oat:#E3DACC; --gray-150:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F;
+    --serif:"Source Serif Pro","Source Serif 4","Iowan Old Style",Constantia,Cambria,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --mono:"JetBrains Mono","Cascadia Mono","Consolas",ui-monospace,monospace; }
+  * { box-sizing:border-box; } html,body { margin:0; padding:0; }
+  body { background:var(--ivory); color:var(--slate); font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  a { color:inherit; }
+  .page { max-width:760px; margin:0 auto; padding:56px 36px 96px; }
+  .topbar { display:flex; gap:14px; align-items:center; font-family:var(--mono); font-size:12px; color:var(--gray-500); margin-bottom:48px; }
+  .topbar a.back { text-decoration:none; color:var(--gray-500); transition:color 120ms ease; } .topbar a.back:hover { color:var(--clay); }
+  .topbar .sep { color:var(--gray-300); }
+  .marker { font-family:var(--mono); font-size:11.5px; color:var(--clay); letter-spacing:0.14em; margin-bottom:14px; }
+  h1 { font-family:var(--serif); font-weight:400; font-size:44px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 10px; }
+  .filepath { font-family:var(--mono); font-size:13px; color:var(--gray-500); margin:0 0 28px; }
+  .lede { font-family:var(--serif); font-style:italic; font-size:19px; line-height:1.55; color:var(--gray-500); max-width:600px; margin:0 0 48px; }
+  .lede strong { color:var(--slate); font-style:normal; font-weight:600; }
+  .card { background:var(--gray-150); border:1px solid var(--gray-300); border-radius:14px; padding:36px; margin-bottom:56px; }
+  .card svg { display:block; width:100%; height:auto; max-height:340px; margin:0 auto; }
+  .card .caption { font-size:13px; color:var(--gray-500); text-align:center; margin-top:20px; }
+  .subhead { font-family:var(--mono); font-size:11.5px; color:var(--gray-500); letter-spacing:0.14em; text-transform:uppercase; margin:48px 0 16px; display:flex; align-items:center; gap:14px; }
+  .subhead::after { content:""; flex:1; height:1px; background:var(--gray-300); }
+  .specimen { border:1px solid var(--gray-300); border-radius:10px; overflow:hidden; background:var(--ivory); margin-top:8px; }
+  .specimen .bar { display:flex; justify-content:space-between; padding:10px 16px; background:var(--gray-150); border-bottom:1px solid var(--gray-300); font-family:var(--mono); font-size:11.5px; color:var(--gray-500); letter-spacing:0.02em; }
+  .specimen .bar .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--clay); margin-right:8px; vertical-align:middle; }
+  .specimen pre { margin:0; padding:22px 24px; font-family:var(--mono); font-size:12.5px; line-height:1.75; color:var(--slate); overflow-x:auto; white-space:pre; }
+  .specimen pre .c { color:var(--gray-500); } .specimen pre .k { color:var(--clay); font-weight:600; } .specimen pre .hd { color:var(--slate); font-weight:700; } .specimen pre .link { color:var(--olive); font-weight:600; }
+  ol.rules { margin:0; padding:0; counter-reset:r; list-style:none; }
+  ol.rules li { counter-increment:r; padding:14px 0 14px 44px; position:relative; font-size:15px; border-top:1px solid var(--gray-300); }
+  ol.rules li:last-child { border-bottom:1px solid var(--gray-300); }
+  ol.rules li::before { content:counter(r,decimal-leading-zero); position:absolute; left:0; top:15px; font-family:var(--mono); font-size:11px; color:var(--gray-500); letter-spacing:0.08em; }
+  ol.rules code, p code { font-family:var(--mono); font-size:0.84em; background:var(--gray-150); padding:1px 6px; border-radius:4px; }
+  .pullquote { margin:36px 0 0; padding:28px 32px; border-left:3px solid var(--clay); background:var(--gray-150); border-radius:0 14px 14px 0; }
+  .pullquote .label { font-family:var(--mono); font-size:11px; color:var(--clay); letter-spacing:0.14em; margin-bottom:12px; }
+  .pullquote blockquote { font-family:var(--serif); font-size:21px; line-height:1.4; margin:0; color:var(--slate); }
+  .pullquote .attribution { font-family:var(--mono); font-size:11.5px; color:var(--gray-500); margin-top:14px; }
+  .nav { margin-top:88px; padding-top:22px; border-top:1px solid var(--gray-300); display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12.5px; }
+  .nav a { text-decoration:none; color:var(--gray-500); transition:color 120ms ease; } .nav a:hover { color:var(--clay); } .nav .home { color:var(--slate); }
+  .ill text { font-family:var(--mono); font-size:12px; fill:var(--slate); }
+  .ill .anno { font-family:var(--sans); font-size:11.5px; fill:var(--gray-500); }
+  .ill .box { fill:var(--ivory); stroke:var(--slate); stroke-width:1.5; }
+  .ill .focus { fill:var(--clay); stroke:var(--slate); stroke-width:2; }
+  .ill .gline { stroke:var(--gray-500); stroke-width:1.2; fill:none; }
+  @media (max-width:600px) { .page { padding:40px 20px 70px; } h1 { font-size:32px; } }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="topbar">
+    <a class="back" href="index.html">← anatomy</a>
+    <span class="sep">·</span>
+    <span>cross-cutting rules · contradictions</span>
+  </header>
+
+  <div class="marker">04 · CROSS-CUTTING RULES</div>
+  <h1>Contradictions.</h1>
+  <p class="filepath">CONTRADICTION: block under ## Notes</p>
+  <p class="lede">
+    The most important rule in the wiki. When a new source disagrees with an existing page,
+    <strong>never silently overwrite</strong>. Log both versions, both sources, both stakeholders — and surface it.
+  </p>
+
+  <div class="card">
+    <svg class="ill" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" aria-label="Two sources merging into a contradiction block">
+      <!-- left source -->
+      <rect class="box" x="30" y="34" width="170" height="80" rx="10"/>
+      <text x="46" y="58" style="font-family:var(--serif);font-size:13px;font-weight:600;">2026-03-14 postmortem</text>
+      <text x="46" y="74" class="anno">SRE team</text>
+      <line class="gline" x1="46" y1="86" x2="184" y2="86"/>
+      <text x="46" y="100" style="font-size:11px;">"connection pool exhaustion"</text>
+
+      <!-- right source -->
+      <rect class="box" x="400" y="34" width="170" height="80" rx="10"/>
+      <text x="416" y="58" style="font-family:var(--serif);font-size:13px;font-weight:600;">2026-04-02 postmortem</text>
+      <text x="416" y="74" class="anno">payments team</text>
+      <line class="gline" x1="416" y1="86" x2="554" y2="86"/>
+      <text x="416" y="100" style="font-size:11px;">"slow downstream call"</text>
+
+      <!-- arrows down -->
+      <path class="gline" d="M115 114 C 115 140, 200 160, 240 168"/>
+      <polygon points="236,165 244,168 236,171" fill="var(--gray-500)"/>
+      <path class="gline" d="M485 114 C 485 140, 400 160, 360 168"/>
+      <polygon points="364,165 356,168 364,171" fill="var(--gray-500)"/>
+
+      <!-- notes block -->
+      <rect class="focus" x="170" y="148" width="260" height="104" rx="10"/>
+      <text x="186" y="172" style="font-family:var(--mono);font-size:11.5px;fill:var(--ivory);font-weight:600;">## Notes</text>
+      <line stroke="var(--ivory)" stroke-width="1" opacity="0.5" x1="186" y1="180" x2="414" y2="180"/>
+      <text x="186" y="200" style="font-family:var(--mono);font-size:11px;fill:var(--ivory);font-weight:600;">CONTRADICTION:</text>
+      <text x="186" y="216" style="font-size:11px;fill:var(--ivory);">both versions logged</text>
+      <text x="186" y="230" style="font-size:11px;fill:var(--ivory);">both sources cited</text>
+      <text x="186" y="244" style="font-size:11px;fill:var(--ivory);">resolution: open</text>
+    </svg>
+    <p class="caption">Both versions live on the page. A human picks the winner — not the wiki.</p>
+  </div>
+
+  <div class="pullquote">
+    <div class="label">THE RULE</div>
+    <blockquote>
+      When a new source contradicts an existing page, <strong style="color:var(--clay);">never silently overwrite</strong>.
+      Add a <code style="font-family:var(--mono);font-size:0.78em;background:var(--ivory);padding:2px 7px;border-radius:4px;">CONTRADICTION:</code> block
+      under <em>Notes</em> capturing both versions, both sources, both dates, and both stakeholder positions.
+    </blockquote>
+    <div class="attribution">— CLAUDE.md · the contract that keeps the wiki honest</div>
+  </div>
+
+  <p class="subhead">A CONTRADICTION block, in full</p>
+  <div class="specimen">
+    <div class="bar"><span><span class="dot"></span>wiki/root-causes/connection-pool-exhaustion.md</span><span>specimen · Notes section</span></div>
+<pre><span class="hd">## Notes</span>
+
+<span class="c">CONTRADICTION:</span> Root cause attribution differs between two incidents
+with identical symptoms.
+
+- 2026-03-14 postmortem (raw/postmortems/2026-03-14-checkout.md, SRE
+  team): blamed connection pool exhaustion in payments-db. Fix:
+  raised pool size from 50 to 200.
+- 2026-04-02 postmortem (raw/postmortems/2026-04-02-checkout.md,
+  payments team): same symptoms with the larger pool. Blamed slow
+  downstream call to fraud-scoring; argued the pool exhaustion was a
+  downstream effect, not a root cause.
+
+Both incidents are linked. The unifying explanation ("downstream slow
+call holds upstream resources") is open. Resolution: needs cross-team
+review.</pre>
+  </div>
+
+  <p class="subhead">What a contradiction must capture</p>
+  <ol class="rules">
+    <li><strong>Both versions</strong> — stated plainly, without preferring one.</li>
+    <li><strong>Both sources</strong> — the <code>raw/</code> paths so a reader can verify.</li>
+    <li><strong>Both dates</strong> — when each version was written.</li>
+    <li><strong>Both stakeholders</strong> — which team or person held each view.</li>
+    <li><strong>Resolution status</strong> — <em>open</em>, <em>under review</em>, or who owns the next step.</li>
+  </ol>
+
+  <p class="subhead">How contradictions ripple through the wiki</p>
+  <ol class="rules">
+    <li>The <code>CONTRADICTION:</code> block lives on the affected page under <em>## Notes</em>.</li>
+    <li>The day's <code>log.md</code> entry records the contradiction in its <em>contradictions surfaced</em> field.</li>
+    <li>The next <code>index.md</code> refresh adds the page to <em>Open contradictions</em> with a one-line summary.</li>
+    <li><code>tools/lint.py</code> flags <code>CONTRADICTION:</code> blocks as <em>warnings</em>, not errors — so they stay visible until a human resolves them.</li>
+    <li>When resolved, the block is replaced by a "Resolved on YYYY-MM-DD" note explaining which version was accepted and why.</li>
+  </ol>
+
+  <p class="subhead">Rules</p>
+  <ol class="rules">
+    <li><strong>Never silently overwrite.</strong> If a new source disagrees, log it; don't decide for the humans.</li>
+    <li>Use the literal token <code>CONTRADICTION:</code> at the start of the block — that's what the tools and the index look for.</li>
+    <li>Preserve the original page content — the contradiction is added <em>alongside</em> it, not <em>instead of</em> it.</li>
+    <li>If you got a previous ingest wrong, log a corrective entry in <code>log.md</code> rather than rewriting history on the page.</li>
+    <li>The wiki surfaces disagreements; humans resolve them.</li>
+  </ol>
+
+  <nav class="nav">
+    <a href="10-stubs.html">← 10 — stubs</a>
+    <a class="home" href="index.html">all pieces</a>
+    <span></span>
+  </nav>
+
+</main>
+</body>
+</html>

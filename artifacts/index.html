@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wiki anatomy — gallery</title>
+<style>
+  :root {
+    --ivory:    #FAF9F5;
+    --slate:    #141413;
+    --clay:     #D97757;
+    --olive:    #788C5D;
+    --oat:      #E3DACC;
+    --gray-150: #F0EEE6;
+    --gray-300: #D1CFC5;
+    --gray-500: #87867F;
+    --serif: "Source Serif Pro", "Source Serif 4", "Iowan Old Style", Constantia, Cambria, Georgia, serif;
+    --sans:  system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono:  "JetBrains Mono", "Cascadia Mono", "Consolas", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--ivory);
+    color: var(--slate);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+
+  .page { max-width: 1120px; margin: 0 auto; padding: 80px 48px 120px; }
+
+  /* ────────── hero ────────── */
+  .hero { display: grid; grid-template-columns: 1fr 320px; gap: 56px; align-items: start; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 18px;
+  }
+  .hero h1 em { font-style: italic; }
+  .hero .deck {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--gray-500);
+    margin: 0 0 28px;
+    max-width: 580px;
+  }
+  .hero .deck strong { font-style: normal; color: var(--slate); font-weight: 600; }
+  .hero .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gray-500);
+    letter-spacing: 0.04em;
+    margin: 0 0 32px;
+  }
+  .hero .meta .dot { padding: 0 8px; color: var(--gray-300); }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--gray-300);
+    border-radius: 999px;
+    background: var(--ivory);
+    font-size: 14px;
+    color: var(--slate);
+    text-decoration: none;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .pill:hover { background: var(--gray-150); border-color: var(--gray-500); }
+  .pill .count {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--clay);
+    font-weight: 600;
+  }
+
+  /* hero illustration */
+  .hero .illo {
+    background: transparent;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .hero .illo svg { width: 100%; max-width: 320px; height: auto; }
+
+  /* divider */
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--gray-300);
+    margin: 72px 0 0;
+  }
+
+  /* ────────── category section ────────── */
+  .category { display: grid; grid-template-columns: 60px 1fr; gap: 24px; margin-top: 72px; }
+  .category .num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--clay);
+    padding-top: 12px;
+    letter-spacing: 0.08em;
+  }
+  .category .head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 10px;
+  }
+  .category h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .category .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gray-150);
+    border: 1px solid var(--gray-300);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--gray-500);
+  }
+  .category .badge .n { color: var(--slate); font-weight: 600; }
+  .category .lede {
+    color: var(--slate);
+    font-size: 15.5px;
+    max-width: 760px;
+    margin: 0 0 28px;
+    line-height: 1.65;
+  }
+
+  /* card grid */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--ivory);
+    border: 1px solid var(--gray-300);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--slate);
+    transition: transform 160ms ease, border-color 160ms ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--gray-500); }
+  .card .illo {
+    background: var(--oat);
+    height: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card .illo svg { width: 78%; height: auto; }
+  .card .body { padding: 20px 22px 18px; flex: 1; display: flex; flex-direction: column; }
+  .card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .card p {
+    margin: 0 0 18px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--slate);
+    flex: 1;
+  }
+  .card .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--clay);
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-300);
+  }
+  .card .foot .arrow { font-size: 14px; }
+
+  /* footer */
+  footer {
+    margin-top: 96px;
+    border-top: 1px solid var(--gray-300);
+    padding-top: 24px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--gray-500);
+    letter-spacing: 0.04em;
+  }
+
+  /* shared illustration helpers */
+  .ill text { font-family: var(--mono); fill: var(--slate); }
+  .ill .box { fill: var(--ivory); stroke: var(--slate); stroke-width: 1.5; }
+  .ill .focus { fill: var(--clay); stroke: var(--slate); stroke-width: 1.5; }
+  .ill .done { fill: var(--olive); stroke: var(--slate); stroke-width: 1.5; }
+  .ill .stub { fill: var(--oat); stroke: var(--slate); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .ill .line { stroke: var(--slate); stroke-width: 1.5; fill: none; }
+  .ill .gline { stroke: var(--gray-500); stroke-width: 1.2; fill: none; }
+  .ill .row { fill: var(--slate); }
+  .ill .row.muted { fill: var(--gray-500); }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero .illo { justify-content: flex-start; }
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .page { padding: 56px 22px 80px; }
+    .hero h1 { font-size: 36px; }
+    .cards { grid-template-columns: 1fr; }
+    .category { grid-template-columns: 1fr; gap: 8px; }
+    .category .num { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="hero">
+    <div>
+      <h1>The wiki's <em>anatomy</em>.</h1>
+      <p class="deck">
+        Drop a postmortem in <strong>raw/</strong> and the wiki has to do three jobs:
+        route, remember, and hold the actual knowledge. Twelve pieces. One contract.
+      </p>
+      <p class="meta">
+        12 pieces<span class="dot">·</span>4 categories<span class="dot">·</span>self-contained HTML<span class="dot">·</span>no external assets
+      </p>
+      <div class="pills">
+        <a class="pill" href="#cat-routing">Routing <span class="count">1</span></a>
+        <a class="pill" href="#cat-memory">Memory <span class="count">1</span></a>
+        <a class="pill" href="#cat-knowledge">Knowledge <span class="count">5</span></a>
+        <a class="pill" href="#cat-rules">Cross-cutting rules <span class="count">4</span></a>
+      </div>
+    </div>
+    <div class="illo">
+      <!-- top-right document-stack illustration -->
+      <svg class="ill" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect class="box" x="20"  y="42" width="170" height="148" rx="10"/>
+        <line class="gline" x1="36" y1="64" x2="170" y2="64"/>
+        <line class="gline" x1="36" y1="80" x2="160" y2="80"/>
+        <line class="gline" x1="36" y1="96" x2="150" y2="96"/>
+        <line class="gline" x1="36" y1="112" x2="165" y2="112"/>
+
+        <rect class="box" x="120" y="22" width="170" height="148" rx="10"/>
+        <line class="gline" x1="136" y1="44" x2="270" y2="44"/>
+        <rect class="focus" x="136" y="58" width="48" height="14" rx="3"/>
+        <rect x="190" y="58" width="34" height="14" rx="3" fill="var(--olive)" stroke="var(--slate)" stroke-width="1.5"/>
+        <line class="gline" x1="136" y1="86" x2="270" y2="86"/>
+        <line class="gline" x1="136" y1="102" x2="262" y2="102"/>
+        <rect x="136" y="118" width="30" height="14" rx="3" fill="var(--oat)" stroke="var(--slate)" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <line class="gline" x1="172" y1="125" x2="266" y2="125"/>
+      </svg>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ─────────────── ROUTING ─────────────── -->
+  <section class="category" id="cat-routing">
+    <div class="num">01</div>
+    <div>
+      <div class="head">
+        <h2>Routing</h2>
+        <span class="badge"><span class="n">1</span>&nbsp;piece</span>
+      </div>
+      <p class="lede">
+        The first file you open. Without this, you'd be scanning folders. With it, you know which page answers your question before you click anything.
+      </p>
+      <div class="cards">
+
+        <a class="card" href="01-the-index.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="40" y="14" width="120" height="92" rx="8"/>
+              <line class="gline" x1="54" y1="34" x2="146" y2="34"/>
+              <rect class="focus" x="54" y="44" width="92" height="6" rx="2"/>
+              <line class="gline" x1="54" y1="60" x2="138" y2="60"/>
+              <line class="gline" x1="54" y1="72" x2="142" y2="72"/>
+              <line class="gline" x1="54" y1="84" x2="130" y2="84"/>
+              <line class="gline" x1="54" y1="96" x2="134" y2="96"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>The index</h3>
+            <p>Seven sections, one wiki-link per line. Tells you what exists, what's still a stub, and what contradicts itself.</p>
+            <div class="foot"><span>01-the-index.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── MEMORY ─────────────── -->
+  <section class="category" id="cat-memory">
+    <div class="num">02</div>
+    <div>
+      <div class="head">
+        <h2>Memory</h2>
+        <span class="badge"><span class="n">1</span>&nbsp;piece</span>
+      </div>
+      <p class="lede">
+        The wiki's diary. Newest on top, append-only, never rewritten. Every ingest gets one entry — what source came in, what pages changed, what conflicts surfaced.
+      </p>
+      <div class="cards">
+
+        <a class="card" href="02-the-log.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <path class="line" d="M100 8 L 96 16 L 104 16 Z" fill="var(--slate)" stroke="none"/>
+              <line class="line" x1="100" y1="18" x2="100" y2="24"/>
+              <rect class="focus" x="38" y="28" width="124" height="20" rx="4"/>
+              <rect class="box" x="38" y="54" width="124" height="16" rx="4"/>
+              <rect class="box" x="38" y="74" width="124" height="16" rx="4"/>
+              <rect class="box" x="38" y="94" width="124" height="16" rx="4"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>The log</h3>
+            <p>Six fields per entry: heading, source, created, updated, contradictions, open questions. New entries stack at the top.</p>
+            <div class="foot"><span>02-the-log.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── KNOWLEDGE ─────────────── -->
+  <section class="category" id="cat-knowledge">
+    <div class="num">03</div>
+    <div>
+      <div class="head">
+        <h2>Knowledge</h2>
+        <span class="badge"><span class="n">5</span>&nbsp;pieces</span>
+      </div>
+      <p class="lede">
+        Five folders, one page per real thing. Incidents are concrete events; services and root-causes accumulate patterns across them;
+        concepts and owners give the wiki a shared vocabulary and a chain of accountability.
+      </p>
+      <div class="cards">
+
+        <a class="card" href="03-incidents-folder.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="40" y="18" width="120" height="84" rx="8"/>
+              <rect class="focus" x="52" y="30" width="48" height="14" rx="3"/>
+              <rect x="106" y="30" width="42" height="14" rx="3" fill="var(--olive)" stroke="var(--slate)" stroke-width="1.5"/>
+              <line class="gline" x1="52" y1="58" x2="148" y2="58"/>
+              <line class="gline" x1="52" y1="70" x2="140" y2="70"/>
+              <line class="gline" x1="52" y1="82" x2="144" y2="82"/>
+              <line class="gline" x1="52" y1="94" x2="128" y2="94"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>incidents/</h3>
+            <p>One page per incident — what happened, when, how it ended. Named <code style="font-family:var(--mono);font-size:11.5px;">YYYY-MM-DD-slug</code>.</p>
+            <div class="foot"><span>03-incidents-folder.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="04-services-folder.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="20" y="42" width="44" height="36" rx="6"/>
+              <rect class="focus" x="78" y="42" width="44" height="36" rx="6"/>
+              <rect class="box" x="136" y="42" width="44" height="36" rx="6"/>
+              <path class="line" d="M64 60 L 76 60"/>
+              <polygon points="72,57 78,60 72,63" fill="var(--slate)"/>
+              <path class="line" d="M122 60 L 134 60"/>
+              <polygon points="130,57 136,60 130,63" fill="var(--slate)"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>services/</h3>
+            <p>One page per service. Upstream, downstream, known failure modes, incident history — the "what calls what" view.</p>
+            <div class="foot"><span>04-services-folder.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="05-root-causes-folder.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="20" y="18" width="50" height="24" rx="5"/>
+              <rect class="box" x="130" y="18" width="50" height="24" rx="5"/>
+              <rect class="focus" x="68" y="76" width="64" height="28" rx="6"/>
+              <path class="line" d="M45 42 C 45 60, 80 60, 86 76"/>
+              <path class="line" d="M155 42 C 155 60, 120 60, 114 76"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>root-causes/</h3>
+            <p>One page per recurring cause. Multiple incidents collapse into one explanation — the most valuable cross-reference in the wiki.</p>
+            <div class="foot"><span>05-root-causes-folder.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="06-concepts-folder.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="40" y="22" width="120" height="76" rx="8"/>
+              <text x="100" y="58" text-anchor="middle" font-family="var(--serif)" font-size="22" fill="var(--clay)" font-style="italic">term.</text>
+              <line class="gline" x1="56" y1="74" x2="144" y2="74"/>
+              <line class="gline" x1="56" y1="86" x2="130" y2="86"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>concepts/</h3>
+            <p>Definitions of terms referenced across the wiki — SEV1 vs SEV2, error budget, MTTR, paging policy.</p>
+            <div class="foot"><span>06-concepts-folder.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="07-owners-folder.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <circle class="box" cx="64" cy="60" r="16"/>
+              <circle class="focus" cx="100" cy="60" r="16"/>
+              <circle class="box" cx="136" cy="60" r="16"/>
+              <line class="gline" x1="48" y1="92" x2="80" y2="92"/>
+              <line class="gline" x1="84" y1="92" x2="116" y2="92"/>
+              <line class="gline" x1="120" y1="92" x2="152" y2="92"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>owners/</h3>
+            <p>One page per team. Members, services owned, recent incidents. No personal contact info — teams, not individuals.</p>
+            <div class="foot"><span>07-owners-folder.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── CROSS-CUTTING RULES ─────────────── -->
+  <section class="category" id="cat-rules">
+    <div class="num">04</div>
+    <div>
+      <div class="head">
+        <h2>Cross-cutting rules</h2>
+        <span class="badge"><span class="n">4</span>&nbsp;pieces</span>
+      </div>
+      <p class="lede">
+        The four contracts every page in the wiki obeys regardless of folder. Frontmatter shape, link syntax, stub conventions, and the one rule that keeps the wiki honest when sources disagree.
+      </p>
+      <div class="cards">
+
+        <a class="card" href="08-frontmatter.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="40" y="18" width="120" height="84" rx="8"/>
+              <rect class="focus" x="52" y="30" width="42" height="10" rx="2"/>
+              <line class="gline" x1="100" y1="35" x2="148" y2="35"/>
+              <rect class="focus" x="52" y="46" width="42" height="10" rx="2"/>
+              <line class="gline" x1="100" y1="51" x2="138" y2="51"/>
+              <rect class="focus" x="52" y="62" width="42" height="10" rx="2"/>
+              <line class="gline" x1="100" y1="67" x2="142" y2="67"/>
+              <rect class="focus" x="52" y="78" width="42" height="10" rx="2"/>
+              <line class="gline" x1="100" y1="83" x2="132" y2="83"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Frontmatter</h3>
+            <p>The YAML block every page carries: type, name, status, owner, sources, source_hashes, tags, last_updated.</p>
+            <div class="foot"><span>08-frontmatter.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="09-wiki-links.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="20" y="42" width="56" height="36" rx="6"/>
+              <rect class="focus" x="124" y="42" width="56" height="36" rx="6"/>
+              <path class="gline" d="M76 60 C 90 60, 110 60, 124 60"/>
+              <text x="100" y="32" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--clay)">[[ ]]</text>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Wiki-links</h3>
+            <p>Obsidian-style <code style="font-family:var(--mono);font-size:11.5px;">[[page-name]]</code> references. Resolved by basename — which must be unique across the whole tree.</p>
+            <div class="foot"><span>09-wiki-links.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="10-stubs.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="stub" x="40" y="22" width="120" height="76" rx="8"/>
+              <text x="100" y="58" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--gray-500)">stub</text>
+              <line class="gline" x1="56" y1="74" x2="144" y2="74" stroke-dasharray="3 3"/>
+              <line class="gline" x1="56" y1="86" x2="130" y2="86" stroke-dasharray="3 3"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Stubs</h3>
+            <p>Placeholder pages that exist only so wiki-links never dangle. Tracked in the index so they don't get forgotten.</p>
+            <div class="foot"><span>10-stubs.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="11-contradictions.html">
+          <div class="illo">
+            <svg class="ill" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="20" y="38" width="56" height="44" rx="6"/>
+              <rect class="box" x="124" y="38" width="56" height="44" rx="6"/>
+              <path class="line" d="M76 50 L 100 60 L 76 70"/>
+              <path class="line" d="M124 50 L 100 60 L 124 70"/>
+              <circle class="focus" cx="100" cy="60" r="6"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Contradictions</h3>
+            <p>The most important rule: when sources disagree, never silently overwrite. Log both versions, surface in the index.</p>
+            <div class="foot"><span>11-contradictions.html</span><span class="arrow">→</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    artifacts/<span style="color:var(--gray-300);"> · </span>incident &amp; postmortem wiki<span style="color:var(--gray-300);"> · </span>inline SVG · no external assets
+  </footer>
+
+</main>
+</body>
+</html>
