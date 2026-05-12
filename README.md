@@ -1,5 +1,10 @@
 # Incident & Postmortem Wiki
 
+**📖 Live site → [saqibnazirbhat.github.io/incident-postmortem-wiki](https://saqibnazirbhat.github.io/incident-postmortem-wiki/)**
+*A visual tour of the wiki's anatomy — 12 self-contained HTML pages explaining every load-bearing piece.*
+
+---
+
 > A self-maintaining knowledge base for ops incidents — pre-processed,
 > cross-referenced, and contradiction-aware. The wiki **is** the answer;
 > raw sources are inputs to maintenance, not query.
